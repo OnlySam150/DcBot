@@ -1,0 +1,16 @@
+{
+    "createAccCommand": [
+        {
+            "titleMainEmbed": "CreateAccCommand Hauptmenü",
+            "firstDescMainEmbed": "Willkommen im Hauptmenü für die Einrichtung von {{BotName}}. Hier kannst du ein Konto für deinen Server erstellen und den Bot einrichten.",
+            "secondDescMainEmbed": "Mit der Einrichtung stimmst du unseren Nutzungsbedingungen und unserer Datenschutzrichtlinie zu. Du findest sie über die Hyperlinks.",
+            "thirdDescMainEmbed": "Wenn du Fragen hast, kontaktiere bitte den Support-Server. Den Link findest du in der Fußzeile.",
+            "fourthDescMainEmbed": "Wenn du den Einrichtungsprozess starten möchtest, klicke bitte auf den Button unten.",
+            "footerMainEmbed": "Nexon | Von Julxan_ und only.sam",
+            "firstButtonMainEmbed": "Setup schließen",
+            "secondButtonMainEmbed": "Setup starten"
+
+        }
+
+    ]
+}
