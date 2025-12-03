@@ -1,5 +1,6 @@
 import {Events, TextDisplayBuilder, SeparatorBuilder, SeparatorSpacingSize, AttachmentBuilder, MediaGalleryBuilder, MessageFlags, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder} from 'discord.js'
-
+import { getInfoText } from '../api/infoFunctionApi.js';
+import { infoTextBuilder } from './function/infoFunctions.js';
 export default {
     name: Events.InteractionCreate,
 
@@ -38,6 +39,8 @@ export default {
 
             switch(value) {
                 case 'whoValue':
+                    const infoData = await getInfoText("whoInfo");
+                    await infoTextBuilder(interaction, "infoBanner", infoData.titletext, infoData.descripttext, row)
                     break;
             }
         } else {
