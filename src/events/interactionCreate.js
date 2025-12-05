@@ -1,11 +1,12 @@
-import {Events, TextDisplayBuilder, SeparatorBuilder, SeparatorSpacingSize, AttachmentBuilder, MediaGalleryBuilder, MessageFlags, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder} from 'discord.js'
+import {Events, TextDisplayBuilder, SeparatorBuilder, SeparatorSpacingSize, AttachmentBuilder, MediaGalleryBuilder, MessageFlags, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ModalBuilder, LabelBuilder} from 'discord.js'
 import { getInfoText } from '../api/infoFunctionApi.js';
 import { infoTextBuilder } from './function/infoFunctions.js';
+import { setTempChannelName, setTempChannelPrivacy, setTempChannelSize, setTempChannelPublic, setTempChannelTrust, setTempChannelUntrust } from '../utils/function/tempChannelFunctions.js';
 export default {
     name: Events.InteractionCreate,
 
     async execute(interaction) {
-        if(interaction.isStringSelectMenu) {
+        if(interaction.isStringSelectMenu()) {
             const value = interaction.values[0];
             const channel = await interaction.guild.channels.cache.get('1442855170978615418');
             const selectMenuMsg = await channel.messages.fetch('1444971649710690457')
@@ -43,6 +44,14 @@ export default {
                     await infoTextBuilder(interaction, "infoBanner", infoData.titletext, infoData.descripttext, row)
                     break;
             }
+        } else if (interaction.isButton()) {
+            const customId = interaction.customId
+
+            switch (customId) {
+                case temp_name_button:
+                    
+            }
+            
         } else {
             return
         }

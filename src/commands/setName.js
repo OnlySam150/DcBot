@@ -21,13 +21,10 @@ export async function execute(interaction) {
     console.log(tempChannel)
 
     try {
-        console.log(tempChannel.userid)
         if (!channelId) {
-            console.log("HAHAHHA DU HURENSOHN")
             await interaction.reply({content: 'Du bist in keinem Sprachkanal!', ephemeral: true});
             return;
         } else if (tempChannel.userid !== userId) {
-            console.log("HAHAHAH DU PISSER")
             await interaction.reply({content: 'Du bist nicht der Besitzer dieses Sprachkanals!', ephemeral: true});
             return;
         } else {

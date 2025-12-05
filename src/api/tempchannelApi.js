@@ -54,15 +54,18 @@ export const getUserTempSetting = async(userId) => {
     }
 }
 
-export const addUserTempSetting = async(userId, channelName, userLimit, emoji) => {
+export const addUserTempSetting = async(userId, options = {}) => {
     try {
+        console.log(options.privacy_status)
+        console.log(options)
         const userSettings = await getUserTempSetting(userId);
-        if (channelName === null) channelName = userSettings.channelName;
-        if (userLimit === null) userLimit = userSettings.userLimit;
-        if (emoji === null) emoji = userSettings.emoji;
+        const channelName = options.channelName ?? userSettings.channelname;
+        const userLimit = options.userLimit ?? userSettings.userlimit;
+        const emoji = options.emoji ?? userSettings.emoji;
+        const privacy_status = options.privacy_status ?? userSettings.privacy_status;
 
-        const sql = `UPDATE tempSettings SET channelName = $1, userLimit = $2, emoji = $3 WHERE userId = $4`;
-        const values = [channelName, userLimit, emoji, userId];
+        const sql = `UPDATE tempSettings SET channelName = $1, userLimit = $2, emoji = $3, privacy_status = $4 WHERE userId = $5`;
+        const values = [channelName, userLimit, emoji, privacy_status, userId];
         await pool.query(sql, values);
 
     } catch (err) {
