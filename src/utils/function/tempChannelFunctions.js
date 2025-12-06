@@ -13,21 +13,31 @@ const importantData = async (interaction) => {
         return [userId, tempchannel]
 }
 
+const tempchannelCheck = async (interaction, channelId) => {
+    const [userId, tempchannel] = await importantData(interaction);
+    if(!channelId) {
+            interaction.reply("Für diesen Command musst du in einem TempChannel sein")
+            return false;
+
+        } else if (tempchannel.userid !== userId) {
+            interaction.reply("Für diesen Befehl musst du einen eigenen TempChannel besitzen")
+            return false;
+} else {
+    return true;
+}
+}
+
 
 //global functions
 
 export const setTempChannelName = async (interaction) => {
     try {
-        const [userId, channelId, tempchannel] = await importantData(interaction)
-        if(!channelId) {
-            interaction.reply("Für diesen Command musst du in einem TempChannel sein")
-            return;
+        const [userId, channelId] = await importantData(interaction)
+        const tempchannelCheck = await tempchannelCheck(interaction, channelid)
 
-        } else if (tempchannel.userid !== userId) {
-            interaction.reply("Für diesen Befehl musst du einen eigenen TempChannel besitzen")
+        if (tempchannelCheck === false) {
             return;
-
-        } else {
+        }
         const name = interaction.options.getString('name');
         const tag = "tempName"
         const cooldown = await getCooldowns(userId, tag)
@@ -53,7 +63,6 @@ export const setTempChannelName = async (interaction) => {
         await channel.edit({name: `${emoji} ║ ${name}`});
         await setCooldowns(userId, Date.now(), tag)
     } 
-    }
     
     } catch (err) {
         console.error("Error setting tempchannel name:", err);
@@ -66,25 +75,20 @@ export const setTempChannelSize = async (interaction) => { //Size noch in Befehl
     try {
     const [userId, tempchannel] = await importantData(interaction)
 
-    if (!tempchannel) {
-        interaction.reply("Für diesen Command musst du in einem TempChannel sein")
-        return;
-    } else if(tempchannel.userid !== userId) {
-        console.log(tempChannel.userid)
-        console.log(userId)
-        interaction.reply("Für diesen Befehl musst du einen eigenen TempChannel besitzen")
-        return;
-    } else {
+    const tempchannelCheck = await tempchannelcheck(interaction, channelid)
+
+        if (tempchannelCheck === false) {
+            return;
+        }
         const channel = await interaction.guild.channels.fetch(tempchannel.channelid)
         console.log(channel)
         await addUserTempSetting(userId, {userLimit: size});
         await channel.edit({userLimit: size});
         await interaction.reply("Die größe deines Tempchannels wurde erfolgreich angepasst")
-    }
     } catch (err) {
         console.error('Error at SlashCommand /"/"channelsize/"/"', err)
     }
-}
+    } 
 
 
 
@@ -92,13 +96,11 @@ export const setTempChannelPrivacy = async (interaction) => {
     try {
         const [userId, tempchannel] = await importantData(interaction)
 
-        if (!tempchannel) {
-            interaction.reply("Für diesen Command musst du in einem TempChannel sein")
+        const tempchannelCheck = await tempchannelcheck(interaction, channelid)
+
+        if (tempchannelCheck === false) {
             return;
-        } else if (tempchannel.userid !== userId) {
-            interaction.reply("Für diesen Befehl musst du einen eigenen TempChannel besitzen")
-            return;
-        } else {
+        } 
             const channel = await interaction.guild.channels.fetch(tempchannel.channelid)
             await addUserTempSetting(userId, {privacy_status: true});
             await channel.edit({
@@ -110,7 +112,7 @@ export const setTempChannelPrivacy = async (interaction) => {
                 ]
             })
             await interaction.reply("Dein Channel wurde erfolgreich auf privat gestellt!")
-        }
+        
     } catch(err) {
         console.error("Error setting tempchannel to privacy", err)
     }
@@ -122,13 +124,11 @@ export const setTempChannelPublic = async (interaction) => {
     try {
         const [userId, tempchannel] = await importantData(interaction)
 
-        if (!tempchannel) {
-            interaction.reply("Für diesen Command musst du in einem TempChannel sein")
+        const tempchannelCheck = await tempchannelCheck(interaction, channelid)
+
+        if (tempchannelCheck === false) {
             return;
-        } else if (tempchannel.userid !== userId) {
-            interaction.reply("Für diesen Befehl musst du einen eigenen TempChannel besitzen")
-            return;
-        } else {
+        } 
             const channel = await interaction.guild.channels.fetch(tempchannel.channelid)
             await addUserTempSetting(userId, {privacy_status: false});
             await channel.edit({
@@ -140,7 +140,7 @@ export const setTempChannelPublic = async (interaction) => {
                 ]
             })
             await interaction.reply("Dein Channel wurde erfolgreich auf öffentlich gestellt!")
-        }
+        
     } catch(err) {
         console.error("Error setting tempchannel to public", err)
     }
@@ -153,13 +153,11 @@ export const setTempChannelTrust = async (interaction) => {
         const trustId = interaction.values[0];
         const [userId, tempchannel] = await importantData(interaction)
 
-        if (!tempchannel) {
-            interaction.reply("Für diesen Command musst du in einem TempChannel sein")
+        const tempchannelCheck = await tempchannelCheck(interaction, channelid)
+
+        if (tempchannelCheck === false) {
             return;
-        } else if (tempchannel.userid !== userId) {
-            interaction.reply("Für diesen Befehl musst du einen eigenen TempChannel besitzen")
-            return;
-        } else {
+        } 
             const channel = await interaction.guild.channels.fetch(tempchannel.channelid)
             await addUserTempSetting(userId, {privacy_status: false});
             await channel.edit({
@@ -171,7 +169,7 @@ export const setTempChannelTrust = async (interaction) => {
                 ]
             })
             await interaction.reply("Dein Channel wurde erfolgreich auf öffentlich gestellt!")
-        }
+        
     } catch(err) {
         console.error("Error setting tempchannel to public", err)
     }
@@ -184,13 +182,11 @@ export const setTempChannelUntrust = async (interaction) => {
         const untrustId = interaction.values[0];
         const [userId, tempchannel] = await importantData(interaction)
 
-        if (!tempchannel) {
-            interaction.reply("Für diesen Command musst du in einem TempChannel sein")
+        const tempchannelCheck = await tempchannelCheck(interaction, channelid)
+
+        if (tempchannelCheck === false) {
             return;
-        } else if (tempchannel.userid !== userId) {
-            interaction.reply("Für diesen Befehl musst du einen eigenen TempChannel besitzen")
-            return;
-        } else {
+        }  
             const channel = await interaction.guild.channels.fetch(tempchannel.channelid)
             await addUserTempSetting(userId, {privacy_status: false});
             await channel.edit({
@@ -202,7 +198,7 @@ export const setTempChannelUntrust = async (interaction) => {
                 ]
             })
             await interaction.reply("Dein Channel wurde erfolgreich auf öffentlich gestellt!")
-        }
+        
     } catch(err) {
         console.error("Error setting tempchannel to public", err)
     }
