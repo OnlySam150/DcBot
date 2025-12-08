@@ -13,39 +13,47 @@ import { dirname } from "node:path";
 import i18next from "i18next";
 import backend from "i18next-fs-backend";
 import dotenv from "dotenv";
-import { pool } from "./src/utils/db.js";
+import { pool } from "./src/utils/db.ts";
 dotenv.config();
 
 const token = process.env.token;
-const clientId = process.env.clientId; 
+const clientId = process.env.clientId;
 const guildId = process.env.guildId;
 
-
- const __filename = fileURLToPath(import.meta.url);
-  const __dirname = dirname(__filename);
-  console.log(__dirname)
-  console.log(path.join(__dirname, '/src/utils/language/en/translation.json'))
-  i18next.use(backend).init({
-          lng: 'en',
-          fallbackLng: 'en',
-          backend: {
-              loadPath: path.join(__dirname, '/src/utils/language/{{lng}}/translation.json'),
-          },
-          interpolation: {
-              escapeValue: false
-          }      
-      })
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+console.log(__dirname);
+console.log(path.join(__dirname, "/src/utils/language/en/translation.json"));
+i18next.use(backend).init({
+  lng: "en",
+  fallbackLng: "en",
+  backend: {
+    loadPath: path.join(
+      __dirname,
+      "/src/utils/language/{{lng}}/translation.json"
+    ),
+  },
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 if (!token || !clientId || !guildId) {
   switch (true) {
     case !token:
-      console.log("No token provided! Update it in the .env file. Also you need to restart the bot manually");
+      console.log(
+        "No token provided! Update it in the .env file. Also you need to restart the bot manually"
+      );
       break;
     case !clientId:
-      console.log("No clientId provided! Update it in the .env file. Also you need to restart the bot manually");
+      console.log(
+        "No clientId provided! Update it in the .env file. Also you need to restart the bot manually"
+      );
       break;
     case !guildId:
-      console.log("No guildId provided! Update it in the .env file. Also you need to restart the bot manually");
+      console.log(
+        "No guildId provided! Update it in the .env file. Also you need to restart the bot manually"
+      );
       break;
   }
   process.exit(1);
@@ -67,7 +75,6 @@ client.cooldowns = new Collection();
 const commands = [];
 
 client.commands = new Collection();
-
 
 const commandsPath = path.join(__dirname, "src", "commands");
 
@@ -156,9 +163,9 @@ const rest = new REST({ version: "10" }).setToken(token);
 
     if (process.env.DEV_MODE === "true") {
       const data = await rest.put(
-      Routes.applicationGuildCommands(clientId, guildId),  //if you want Public Commands: Routes.applicationCommands
-      { body: commands }
-    );
+        Routes.applicationGuildCommands(clientId, guildId), //if you want Public Commands: Routes.applicationCommands
+        { body: commands }
+      );
     } else {
       const data = await rest.put(
         Routes.applicationCommands(clientId), //if you want Public Commands: Routes.applicationCommands
@@ -178,18 +185,16 @@ const rest = new REST({ version: "10" }).setToken(token);
   }
 })();
 
-
-process.on('SIGINT', async () => {
-  console.log('[SYSTEM] Shutdown signal received, closing DB pool...');
+process.on("SIGINT", async () => {
+  console.log("[SYSTEM] Shutdown signal received, closing DB pool...");
   await pool.end();
   process.exit(0);
 });
 
-process.on('SIGTERM', async () => {
-  console.log('[SYSTEM] SIGTERM received, closing DB pool...');
+process.on("SIGTERM", async () => {
+  console.log("[SYSTEM] SIGTERM received, closing DB pool...");
   await pool.end();
   process.exit(0);
 });
-
 
 client.login(token);

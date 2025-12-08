@@ -1,8 +1,10 @@
 {
   "name": "nyxianprv",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
+  "type": "module",
   "scripts": {
+    "dev": "node --loader @esbuild-kit/esm-loader index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,5 +26,12 @@
     "i18next-fs-backend": "^2.6.0",
     "nodemon": "^3.1.10",
     "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@esbuild-kit/esm-loader": "^2.6.5",
+    "@types/node": "^24.10.1",
+    "@types/pg": "^8.15.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }
