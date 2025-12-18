@@ -1,0 +1,10 @@
+# Exclude node_modules and build artifacts from the build context
+node_modules
+dist
+.git
+.env
+.DS_Store
+Dockerfile
+docker-compose.yml
+npm-debug.log
+package-lock.json
