@@ -9,8 +9,7 @@ RUN npm ci
 
 # Copy project files and compile TypeScript into dist
 COPY . .
-RUN npx esbuild index.ts --bundle --platform=node --target=node20 --outfile=dist/index.js --format=cjs
-# Runtime stage: smaller image with only production dependencies
+RUN npx esbuild index.ts --bundle --platform=node --target=node20 --outfile=dist/index.js --format=esm --banner:js="import { createRequire } from 'module'; const require = createRequire(import.meta.url);"# Runtime stage: smaller image with only production dependencies
 FROM node:20-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
