@@ -9,7 +9,7 @@ RUN npm ci
 
 # Copy project files and compile TypeScript into dist
 COPY . .
-RUN npx tsc --rootDir . --outDir dist
+RUN npx tsc --rootDir . --outDir dist --noEmitOnError false
 
 # Runtime stage: smaller image with only production dependencies
 FROM node:20-alpine AS runtime
