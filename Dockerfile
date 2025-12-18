@@ -1,31 +1,17 @@
-# Multi-stage Dockerfile for building and running the TypeScript Discord bot
-# Builder stage: install all deps and compile TypeScript to /app/dist
-FROM node:20 AS builder
+FROM node:20-alpine
 WORKDIR /app
 
-# Copy package manifests and install all dependencies (including dev) for build
+# Wir kopieren die package-Dateien zuerst für besseres Caching
 COPY package*.json ./
-RUN npm ci
 
-# Copy project files and compile TypeScript into dist
-COPY . .
-RUN npx esbuild index.ts --bundle --platform=node --target=node20 --outfile=dist/index.js --format=esm --banner:js="import { createRequire } from 'module'; const require = createRequire(import.meta.url);"# Runtime stage: smaller image with only production dependencies
-FROM node:20-alpine AS runtime
-WORKDIR /app
-ENV NODE_ENV=production
-
-# Install only production dependencies
-COPY package*.json ./
+# Installiere nur Production-Abhängigkeiten
 RUN npm ci --omit=dev
 
-# Copy project files (source, static assets). .dockerignore will exclude node_modules and other excluded files
+# Kopiere den Rest deines Codes (jetzt inkl. der .js Dateien)
 COPY . .
 
-# Copy compiled output from builder
-COPY --from=builder /app/dist ./dist
+# Falls dein Bot Umgebungsvariablen braucht, stelle sicher, 
+# dass sie in Dokploy unter "Runtime" eingetragen sind.
 
-# Run as non-root user for safety
-USER node
-
-# Start the app from the compiled output
-CMD ["node", "dist/index.js"]
+# Startbefehl für die Hauptdatei (index.js oder wie sie jetzt heißt)
+CMD ["node", "index.js"]
