@@ -13,7 +13,7 @@ import { dirname } from "node:path";
 import i18next from "i18next";
 import backend from "i18next-fs-backend";
 import dotenv from "dotenv";
-import { pool } from "./src/utils/db.ts";
+import { pool } from "./src/utils/db.js";
 dotenv.config();
 
 const token = process.env.token;

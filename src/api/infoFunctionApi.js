@@ -1,4 +1,4 @@
-import { pool } from "../utils/db.ts";
+import { pool } from "../utils/db.js";
 
 export const getInfoText = async (tag) => {
   try {
