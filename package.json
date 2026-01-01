@@ -4,7 +4,7 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "node --loader @esbuild-kit/esm-loader index.ts",
+    "dev": "node --loader @esbuild-kit/esm-loader index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

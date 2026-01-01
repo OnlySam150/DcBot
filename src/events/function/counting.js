@@ -12,13 +12,13 @@ export const countingFunction = async (message) => {
     const countData = await getCountData(message.channel.id);
 
     if (author_id === countData.last_user_id) {
-      await updateCountData(message.channel.id, 0, countData.last_user_id);
+      await updateCountData(message.channel.id, 0, author_id);
       message.react("❌");
       await message.reply(
         `<@${author_id}> hat zwei mal gezählt! Die nächste Zahl ist 1`
       );
     } else if (parseInt(number[0]) !== countData.last_number + 1) {
-      await updateCountData(message.channel.id, 0, countData.last_user_id);
+      await updateCountData(message.channel.id, 0, author_id);
       message.react("❌");
       await message.reply(
         `<@${author_id}> hat die falsche Zahl gepostet! Die nächste Zahl ist 1`
