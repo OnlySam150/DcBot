@@ -4,14 +4,12 @@ export const countingFunction = async (message) => {
   if (message.author.bot) return;
   try {
     const content = message.content;
-    const number_regax = /[0-9][0-9]*/;
-    const number = content.match(number_regax);
+    const number_regex = /[0-9][0-9]*/;
+    const number = content.match(number_regex);
     const author_id = message.author.id;
     if (!number) return false;
 
     const countData = await getCountData(message.channel.id);
-
-    console.log(countData);
 
     if (author_id === countData.last_user_id) {
       await updateCountData(message.channel.id, 0, countData.last_user_id);
