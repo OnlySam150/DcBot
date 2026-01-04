@@ -55,3 +55,13 @@ export const delete_ad_information = async (user_id) => {
     console.error("Error deleting ad information:", err);
   }
 };
+
+export const get_expired_ads = async () => {
+  try {
+    const sql = "SELECT * FROM ad_table WHERE expires_at < NOW()";
+    const result = await pool.query(sql);
+    return result.rows;
+  } catch (err) {
+    console.error("Error getting expired ads:", err);
+  }
+};

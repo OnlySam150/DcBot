@@ -5,6 +5,7 @@ import {
   delete_ad_information,
   get_ad_information,
 } from "../api/adsApi";
+import settings from "../utils/settings.json" assert { type: "json" };
 
 export const data = new SlashCommandBuilder()
   .setName("werbung")
@@ -31,6 +32,11 @@ export async function execute(interaction) {
     const ad_information = (await get_ad_information(user_id)) ?? {
       expires_at: new Date(3600000),
     };
+
+    if (interaction.channel.id !== settings.adChannelId) {
+      //muss noch zu command channel geändert werden; funktioniert aktuell code technisch aber noch nicht
+      return;
+    }
 
     if (ad_information.expires_at > new Date()) {
       await interaction.reply({
@@ -72,7 +78,7 @@ export async function execute(interaction) {
         sendMessage.id,
         expires_at
       );
-      console.log(ad_to_db);
+
       if (ad_to_db === true) {
         await interaction.reply({
           content: "Deine Werbung wurde erfolgreich gepostet!",
