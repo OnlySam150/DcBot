@@ -5,7 +5,7 @@ import {
   delete_ad_information,
   get_ad_information,
 } from "../api/adsApi";
-import settings from "../utils/settings.json" assert { type: "json" };
+import settings from "../utils/settings.json" with { type: "json" };
 
 export const data = new SlashCommandBuilder()
   .setName("werbung")

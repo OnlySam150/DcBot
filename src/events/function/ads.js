@@ -4,7 +4,7 @@ import {
   get_expired_ads,
   delete_ad_information,
 } from "../../api/adsApi";
-import settings from "../utils/settings.json" assert { type: "json" };
+import settings from "../../utils/settings.json" with { type: "json" };
 
 export const update_ad_status = async (user, status) => {
   const user_id = user.id;
