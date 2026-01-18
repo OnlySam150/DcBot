@@ -17,6 +17,7 @@ export const update_ad_status = async (user, status) => {
 
 export const check_and_update_expired_ads = async (client) => {
   const expired_ads = await get_expired_ads();
+  if (expired_ads.length === 0) return;
   expired_ads.forEach(async (item) => {
     const channel = await client.channels.fetch(settings.adChannelId);
     const message = await channel.messages.fetch(item.message_id);
