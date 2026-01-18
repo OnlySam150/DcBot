@@ -1,11 +1,14 @@
 import { pool } from "../utils/db.js";
 
-export const getLevelData = async (userId) => {
+export const getLevelData = async (userId = null) => {
   try {
-    const sql = `SELECT * FROM level WHERE id = $1`;
-    const values = [userId];
+    const leaderboard = userId ? false : true;
+    const sql = leaderboard
+      ? `SELECT * FROM level ORDER BY xp DESC`
+      : `SELECT * FROM level WHERE id = $1`;
+    const values = leaderboard ? [] : [userId];
     const result = await pool.query(sql, values);
-    return result.rows[0];
+    return leaderboard ? result.rows : result.rows[0];
   } catch (err) {
     console.error("Error getting Level Data", err);
   }
