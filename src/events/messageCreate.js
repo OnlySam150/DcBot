@@ -8,7 +8,6 @@ export default {
   async execute(message) {
     if (message.author.bot) return;
     await levelFunction(message);
-    console.log("test");
     switch (message.channel.id) {
       case data.commandChannel:
         setTimeout(() => {
