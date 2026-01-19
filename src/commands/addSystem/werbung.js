@@ -4,25 +4,25 @@ import {
   set_ad_information,
   delete_ad_information,
   get_ad_information,
-} from "../api/adsApi";
-import settings from "../utils/settings.json" with { type: "json" };
+} from "../../api/adsApi";
+import settings from "../../utils/settings.json" with { type: "json" };
 
 export const data = new SlashCommandBuilder()
   .setName("werbung")
   .setDescription(
-    "Mit diesem Befehl kannst du Werbung posten. Beachte dabei unsere Werbung in deinem Status zu haben!"
+    "Mit diesem Befehl kannst du Werbung posten. Beachte dabei unsere Werbung in deinem Status zu haben!",
   )
   .addStringOption((option) =>
     option
       .setName("text")
       .setDescription("Der Werbungs Text die du posten möchtest")
-      .setRequired(true)
+      .setRequired(true),
   )
   .addStringOption((option) =>
     option
       .setName("invite")
       .setDescription("Der Werbungs Invite Link")
-      .setRequired(true)
+      .setRequired(true),
   );
 
 export async function execute(interaction) {
@@ -41,7 +41,7 @@ export async function execute(interaction) {
     if (ad_information.expires_at > new Date()) {
       await interaction.reply({
         content: `Du hast bereits eine aktive Werbung die bis zum ${ad_information.expires_at.toLocaleDateString(
-          "de-DE"
+          "de-DE",
         )} läuft. Du kannst erst wieder Werbung posten, wenn diese abgelaufen ist.`,
         ephemeral: true,
       });
@@ -69,14 +69,14 @@ export async function execute(interaction) {
       }
 
       const sendMessage = await interaction.channel.send(
-        `${ad_message}\nUnsere Einladung: ${ad_invite}`
+        `${ad_message}\nUnsere Einladung: ${ad_invite}`,
       );
       const expires_milisecons = Date.now() + 14 * 24 * 60 * 60 * 1000;
       const expires_at = new Date(expires_milisecons);
       const ad_to_db = await set_ad_information(
         user_id,
         sendMessage.id,
-        expires_at
+        expires_at,
       );
 
       if (ad_to_db === true) {

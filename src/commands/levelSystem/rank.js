@@ -1,5 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { getLevelData } from "../api/levelApi.js";
+import { getLevelData } from "../../api/levelApi.js";
 
 export const data = new SlashCommandBuilder()
   .setName("rank")
