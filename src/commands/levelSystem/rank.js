@@ -26,10 +26,10 @@ export async function execute(interaction) {
       embed = new EmbedBuilder()
         .setColor(0x0099ff)
         .setTitle(`${user.user.username}'s Rang`)
-        .setDescription(`Level: **1**\nXP: **0**`)
+        .setDescription(`Level: **0**\nXP: **0**`)
         .setThumbnail(user.user.displayAvatarURL());
     } else {
-      const userLevel = levelData.level ? levelData.level : 1;
+      const userLevel = levelData.level ? levelData.level : 0;
       const userXp = levelData.xp ? levelData.xp : 0;
       embed = new EmbedBuilder()
         .setColor(0x0099ff)
