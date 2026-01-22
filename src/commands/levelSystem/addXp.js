@@ -7,6 +7,7 @@ import { getLevelData, updateLevelData } from "../../api/levelApi.js";
 import {
   levelCalculateFunction,
   checkLevelUp,
+  yLevelCalulate,
 } from "../../utils/function/levelMath.js";
 
 export const data = new SlashCommandBuilder()
@@ -31,11 +32,13 @@ export async function execute(interaction) {
     const user = interaction.options.getUser("user");
     const xp = interaction.options.getInteger("xp");
     const levelData = await getLevelData(user.id);
-    const levelCalculate = await levelCalculateFunction(levelData.level);
+    const levelCalculate = await levelCalculateFunction(levelData.level + 1);
 
     const newXp = levelData.xp + xp;
+    console.log(levelCalculate.levelFormel);
 
-    const newLevel = checkLevelUp(newXp, levelCalculate.levelFormel);
+    const newLevel = await checkLevelUp(newXp, levelCalculate.levelFormel);
+    console.log(newLevel);
 
     const embed = new EmbedBuilder()
       .setTitle("LevelSystem")
@@ -45,7 +48,9 @@ export async function execute(interaction) {
       .setColor("#00FF00");
 
     if (newLevel) {
-      await updateLevelData(user.id, levelData.level + 1, newXp);
+      const level = await yLevelCalulate(newXp);
+      console.log(level);
+      await updateLevelData(user.id, level, newXp);
     } else {
       await updateLevelData(user.id, levelData.level, newXp);
     }
