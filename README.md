@@ -43,16 +43,16 @@ Der Bot ist modular aufgebaut, um Wartbarkeit und Skalierbarkeit zu gewährleist
 ```text
 ├── src
 │   └── api
-│       ├── commands
-│       │   ├── addSystem
-│       │   ├── levelSystem
-│       │   ├── moderation
-│       │   └── tempSystem
-│       ├── events
-│       │   └── function
-│       └── utils
-│           ├── function
-│           └── images
+│   ├── commands
+│   │   ├── addSystem
+│   │   ├── levelSystem
+│   │   ├── moderation
+│   │   └── tempSystem
+│   ├── events
+│   │   └── function
+│   └── utils
+│   ├── function
+│   └── images
 ├── index.js
 └── .env.dist
 ```
