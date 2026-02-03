@@ -4,9 +4,6 @@
 ![Status](https://img.shields.io/badge/Status-In_Development-orange)
 ![License](https://img.shields.io/badge/License-Proprietary-red)
 
-⚠️ **Hinweis:** 
-> Dieses Projekt ist Teil meines Portfolios. Der Quellcode dient nur zur Ansicht ("Source Available") und darf nicht kopiert oder für eigene Projekte verwendet werden.
-
 🚧 **Status: Work in Progress**
 > Dieses Projekt befindet sich in der aktiven Entwicklungs-Phase.
 > * Einige Module sind noch nicht vollständig implementiert.
